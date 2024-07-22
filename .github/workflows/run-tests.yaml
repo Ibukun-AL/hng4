@@ -1,0 +1,21 @@
+name: Run Tests and Publish Report
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+    - name: Run tests
+      run: mvn test
+    - name: Publish Test Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: target/surefire-reports
